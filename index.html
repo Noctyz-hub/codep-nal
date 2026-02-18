@@ -570,6 +570,133 @@ h1 {
 .confirm-sub { color: var(--text-dim); font-style: italic; font-size: 16px; margin-bottom: 28px; }
 .confirm-actions { display: flex; gap: 10px; justify-content: center; }
 
+/* ─── PASSWORD MODAL ─── */
+.pwd-box {
+  background: var(--surface);
+  border: 1px solid var(--gold-dim);
+  border-top: 2px solid var(--gold);
+  padding: 44px 48px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  animation: modalIn 0.25s ease;
+  position: relative;
+}
+.pwd-icon {
+  font-size: 40px;
+  margin-bottom: 18px;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(201,168,76,0.3));
+}
+.pwd-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+.pwd-sub {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 28px;
+  letter-spacing: 0.5px;
+}
+.pwd-input-wrap { position: relative; margin-bottom: 10px; }
+.pwd-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'EB Garamond', serif;
+  font-size: 22px;
+  padding: 14px 48px 14px 18px;
+  outline: none;
+  text-align: center;
+  letter-spacing: 4px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pwd-input:focus {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+}
+.pwd-input.error {
+  border-color: var(--red-light);
+  animation: shake 0.4s ease;
+}
+@keyframes shake {
+  0%,100%{ transform:translateX(0); }
+  20%{ transform:translateX(-8px); }
+  40%{ transform:translateX(8px); }
+  60%{ transform:translateX(-5px); }
+  80%{ transform:translateX(5px); }
+}
+.pwd-toggle {
+  position: absolute;
+  right: 14px; top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.15s;
+  padding: 4px;
+}
+.pwd-toggle:hover { color: var(--gold); }
+.pwd-error-msg {
+  font-size: 14px;
+  color: var(--red-light);
+  font-style: italic;
+  min-height: 20px;
+  margin-bottom: 20px;
+  transition: opacity 0.2s;
+}
+.pwd-actions { display: flex; gap: 10px; }
+.pwd-actions .btn { flex: 1; justify-content: center; }
+.pwd-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: all 0.15s;
+}
+.pwd-close:hover { border-color: var(--red); color: var(--red-light); }
+
+/* Bouton cadenas dans le header */
+.lock-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 6px 18px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: default;
+  transition: all 0.2s;
+}
+.lock-badge.unlocked {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+}
+.lock-badge .lock-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+}
+.lock-badge.unlocked .lock-dot { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+
 /* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
@@ -601,6 +728,10 @@ h1 {
   <h1>CODE PÉNAL</h1>
   <p class="header-sub">Recueil officiel des infractions et sanctions applicables</p>
   <div class="header-divider"></div>
+  <div id="lockBadge" class="lock-badge">
+    <span class="lock-dot"></span>
+    <span id="lockLabel">Accès protégé</span>
+  </div>
 </header>
 
 <!-- MAIN -->
@@ -621,7 +752,7 @@ h1 {
       <span class="search-icon">⚖</span>
       <input class="search-box" id="searchInput" type="text" placeholder="Rechercher un article, une infraction…">
     </div>
-    <button class="btn btn-primary" onclick="openModal()">＋ Nouvel Article</button>
+    <button class="btn btn-primary" onclick="requirePwd({type:'add'})">＋ Nouvel Article</button>
     <button class="btn btn-secondary" onclick="exportData()">↓ Exporter</button>
     <label class="btn btn-secondary" style="cursor:pointer">
       ↑ Importer
@@ -694,7 +825,79 @@ h1 {
   </div>
 </div>
 
+<!-- PASSWORD OVERLAY -->
+<div class="overlay" id="pwdOverlay" style="display:none">
+  <div class="pwd-box">
+    <button class="pwd-close" onclick="closePwd()" title="Fermer">✕</button>
+    <span class="pwd-icon">🔐</span>
+    <div class="pwd-title">Accès Restreint</div>
+    <p class="pwd-sub">Entrez le mot de passe administrateur pour continuer.</p>
+    <div class="pwd-input-wrap">
+      <input class="pwd-input" id="pwdInput" type="password" placeholder="••••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPwd()">
+      <button class="pwd-toggle" onclick="togglePwdVis()" title="Afficher/Masquer" id="pwdToggle">👁</button>
+    </div>
+    <div class="pwd-error-msg" id="pwdError"></div>
+    <div class="pwd-actions">
+      <button class="btn btn-secondary" onclick="closePwd()">Annuler</button>
+      <button class="btn btn-primary" onclick="checkPwd()">🔓 Valider</button>
+    </div>
+  </div>
+</div>
+
 <script>
+/* ════════════════════════════════════════
+   MOT DE PASSE
+════════════════════════════════════════ */
+const PWD = '100686';
+let unlocked = false;
+let pendingAction = null;
+
+function requirePwd(action) {
+  if (unlocked) { executePendingAction(action); return; }
+  pendingAction = action;
+  q('pwdInput').value = '';
+  q('pwdError').textContent = '';
+  q('pwdInput').type = 'password';
+  q('pwdToggle').textContent = '👁';
+  q('pwdOverlay').style.display = 'flex';
+  setTimeout(() => q('pwdInput').focus(), 80);
+}
+
+function checkPwd() {
+  if (q('pwdInput').value === PWD) {
+    unlocked = true;
+    q('pwdOverlay').style.display = 'none';
+    updateLockBadge();
+    if (pendingAction) { const a = pendingAction; pendingAction = null; executePendingAction(a); }
+  } else {
+    const inp = q('pwdInput');
+    inp.classList.add('error');
+    q('pwdError').textContent = 'Mot de passe incorrect. Accès refusé.';
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
+  }
+}
+
+function executePendingAction(action) {
+  if (action.type === 'add')    openModal();
+  if (action.type === 'edit')   openModal(action.id);
+  if (action.type === 'delete') askDel(action.id);
+}
+
+function closePwd() { q('pwdOverlay').style.display='none'; pendingAction=null; }
+
+function togglePwdVis() {
+  const inp = q('pwdInput'), tog = q('pwdToggle');
+  if (inp.type === 'password') { inp.type = 'text'; tog.textContent = '🙈'; }
+  else { inp.type = 'password'; tog.textContent = '👁'; }
+}
+
+function updateLockBadge() {
+  const badge = q('lockBadge'), label = q('lockLabel');
+  if (unlocked) { badge.classList.add('unlocked'); label.textContent = 'Mode administrateur actif'; }
+  else { badge.classList.remove('unlocked'); label.textContent = 'Accès protégé'; }
+}
+
 /* ════════════════════════════════════════
    CONFIG SANCTIONS
 ════════════════════════════════════════ */
@@ -802,8 +1005,8 @@ function renderList() {
       ${a.desc ? `<div class="article-desc">${e(a.desc)}</div>` : ''}
       <div class="sanctions-row">${(a.sanctions||[]).map(renderTag).join('')}</div>
       <div class="article-actions">
-        <button class="btn-card btn-edit-card" onclick="openModal('${a.id}')">✎ Modifier</button>
-        <button class="btn-card btn-del-card" onclick="askDel('${a.id}')">✕ Supprimer</button>
+        <button class="btn-card btn-edit-card" onclick="requirePwd({type:'edit',id:'${a.id}'})" >✎ Modifier</button>
+        <button class="btn-card btn-del-card"  onclick="requirePwd({type:'delete',id:'${a.id}'})">✕ Supprimer</button>
       </div>
     </div>
   `).join('');
@@ -1020,7 +1223,7 @@ function e(s) {
 }
 
 document.getElementById('searchInput').addEventListener('input', renderList);
-document.addEventListener('keydown', ev => { if(ev.key==='Escape'){closeModal();cancelDel();} });
+document.addEventListener('keydown', ev => { if(ev.key==='Escape'){closeModal();cancelDel();closePwd();} });
 
 /* ════════════════════════════════════════
    EXEMPLES PAR DÉFAUT
