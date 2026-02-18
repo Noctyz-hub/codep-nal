@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Pénal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:          #0b0c0f;
+  --surface:     #111318;
+  --surface2:    #181c24;
+  --border:      #252935;
+  --border2:     #2f3545;
+  --gold:        #c9a84c;
+  --gold-dim:    #876f32;
+  --gold-light:  #e8d080;
+  --red:         #7b1e1e;
+  --red-light:   #e05252;
+  --text:        #ddd8cc;
+  --text-dim:    #9a9280;
+  --text-muted:  #5a5448;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'EB Garamond', serif;
+  font-size: 18px;
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── HEADER ─── */
+header {
+  position: relative;
+  text-align: center;
+  padding: 64px 24px 48px;
+  background: linear-gradient(180deg, #0e1018 0%, var(--bg) 100%);
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold-light) 50%, var(--gold) 70%, transparent 100%);
+}
+.header-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.seal-line {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+}
+.seal-line:last-child { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+.seal-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  color: var(--gold-light);
+  letter-spacing: -2px;
+  line-height: 0.95;
+  text-shadow: 0 0 80px rgba(201,168,76,0.18);
+}
+.header-sub {
+  margin-top: 14px;
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+.header-divider {
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+  margin: 28px auto 0;
+}
+
+/* ─── CONTAINER ─── */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  display: flex;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 18px 10px;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: var(--surface2); }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ─── TOOLBAR ─── */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.search-wrap { flex: 1; min-width: 220px; position: relative; }
+.search-icon {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 15px;
+  pointer-events: none;
+}
+.search-box {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
+  padding: 12px 14px 12px 42px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-box:focus { border-color: var(--gold-dim); box-shadow: 0 0 0 3px rgba(201,168,76,0.07); }
+.search-box::placeholder { color: var(--text-muted); }
+
+.btn {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.btn-primary { background: var(--gold); border-color: var(--gold); color: #0b0c0f; }
+.btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); box-shadow: 0 4px 20px rgba(201,168,76,0.2); }
+.btn-secondary { background: transparent; border-color: var(--border2); color: var(--text-dim); }
+.btn-secondary:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+/* ─── FILTERS ─── */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.chip {
+  font-size: 13px;
+  padding: 5px 14px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'EB Garamond', serif;
+}
+.chip:hover { border-color: var(--gold-dim); color: var(--gold); }
+.chip.active { background: var(--gold); border-color: var(--gold); color: #0b0c0f; font-weight: 600; }
+
+/* ─── SECTION HEADING ─── */
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ─── ARTICLE CARDS ─── */
+.articles-list { display: flex; flex-direction: column; gap: 12px; }
+
+.article-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold-dim);
+  padding: 22px 26px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  animation: slideUp 0.3s ease both;
+}
+.article-card:hover {
+  border-left-color: var(--gold);
+  transform: translateX(3px);
+  box-shadow: -3px 0 24px rgba(201,168,76,0.07);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.article-num-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.article-cat {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 1px solid var(--border2);
+}
+.article-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.article-desc {
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 16px;
+  margin-top: 8px;
+  line-height: 1.55;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+}
+
+/* ─── SANCTION TAGS ─── */
+.sanctions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.stag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-family: 'EB Garamond', serif;
+  padding: 5px 13px;
+  border: 1px solid;
+  line-height: 1.2;
+}
+.stag-points    { border-color: #7b1e1e; color: #e57878; background: rgba(123,30,30,0.12); }
+.stag-prison    { border-color: #2d3555; color: #8899cc; background: rgba(45,53,85,0.2); }
+.stag-garde     { border-color: #7a4010; color: #e8873a; background: rgba(122,64,16,0.15); }
+.stag-suspension{ border-color: #4a2060; color: #a970e0; background: rgba(74,32,96,0.15); }
+.stag-permis    { border-color: #0d4a3a; color: #3ec9a0; background: rgba(13,74,58,0.15); }
+.stag-autre     { border-color: var(--border2); color: var(--text-dim); background: rgba(255,255,255,0.02); }
+
+/* ─── CARD ACTIONS ─── */
+.article-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.article-card:hover .article-actions { opacity: 1; }
+
+.btn-card {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+}
+.btn-edit-card { border-color: var(--border2); color: var(--text-muted); }
+.btn-edit-card:hover { border-color: var(--gold-dim); color: var(--gold); }
+.btn-del-card { border-color: var(--red); color: var(--red-light); }
+.btn-del-card:hover { background: var(--red); color: #fff; }
+
+/* ─── EMPTY STATE ─── */
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  border: 1px dashed var(--border2);
+  background: var(--surface);
+}
+.empty-icon { font-size: 52px; margin-bottom: 18px; display: block; }
+.empty-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.empty-sub { color: var(--text-muted); font-style: italic; font-size: 16px; }
+
+/* ─── MODAL ─── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,6,10,0.92);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeOverlay 0.2s ease;
+}
+@keyframes fadeOverlay { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-top: 2px solid var(--gold-dim);
+  width: 100%;
+  max-width: 700px;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 40px;
+  position: relative;
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.modal-close {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-left: 16px;
+  transition: all 0.15s;
+}
+.modal-close:hover { border-color: var(--red); color: var(--red-light); }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-full { grid-column: 1 / -1; }
+.form-group { display: flex; flex-direction: column; }
+
+.flabel {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.required-star { color: var(--red-light); margin-left: 3px; }
+
+.finput, .ftextarea, .fselect {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'EB Garamond', serif;
+  font-size: 17px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.finput:focus, .ftextarea:focus, .fselect:focus {
+  border-color: var(--gold-dim);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.07);
+}
+.ftextarea { resize: vertical; min-height: 80px; }
+.fselect {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%235a5448'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.fselect option { background: #13131a; }
+.finput::placeholder, .ftextarea::placeholder { color: var(--text-muted); }
+
+.form-gap { margin-top: 24px; }
+
+/* Sanctions section */
+.sanc-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sanc-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.s-builder { display: flex; flex-direction: column; gap: 10px; }
+
+.s-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 100px auto;
+  gap: 8px;
+  align-items: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  animation: slideUp 0.2s ease;
+}
+.s-row.mode-autre {
+  grid-template-columns: 1fr 1fr auto;
+}
+
+.s-select, .s-val, .s-unite {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.s-select, .s-unite { appearance: none; cursor: pointer; }
+.s-select:focus, .s-val:focus, .s-unite:focus { border-color: var(--gold-dim); }
+.s-select option, .s-unite option { background: #13131a; }
+.s-val { text-align: center; }
+.s-unite { font-size: 13px; }
+
+.s-remove {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red-light);
+  cursor: pointer;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.s-remove:hover { background: var(--red); color: #fff; }
+
+.btn-add-sanc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px;
+  background: transparent;
+  border: 1px dashed var(--border2);
+  color: var(--text-muted);
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: 6px;
+}
+.btn-add-sanc:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── CONFIRM DIALOG ─── */
+.confirm-box {
+  background: var(--surface);
+  border: 1px solid var(--red);
+  padding: 36px 40px;
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+  animation: modalIn 0.2s ease;
+}
+.confirm-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--red-light);
+  margin-bottom: 10px;
+}
+.confirm-sub { color: var(--text-dim); font-style: italic; font-size: 16px; margin-bottom: 28px; }
+.confirm-actions { display: flex; gap: 10px; justify-content: center; }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-full { grid-column: 1; }
+  .s-row { grid-template-columns: 1fr 1fr auto; }
+  .s-row .s-select { grid-column: 1 / -1; }
+  .stats-bar { flex-wrap: wrap; }
+  .stat-item { min-width: 33%; border-bottom: 1px solid var(--border); }
+  .article-actions { opacity: 1; }
+  .modal { padding: 24px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-seal">
+    <div class="seal-line"></div>
+    <span class="seal-text">République · Jeu de Rôle</span>
+    <div class="seal-line"></div>
+  </div>
+  <h1>CODE PÉNAL</h1>
+  <p class="header-sub">Recueil officiel des infractions et sanctions applicables</p>
+  <div class="header-divider"></div>
+</header>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num" id="sTotal">0</div><div class="stat-label">Articles</div></div>
+    <div class="stat-item"><div class="stat-num" id="sPoints">0</div><div class="stat-label">Retrait pts</div></div>
+    <div class="stat-item"><div class="stat-num" id="sPrison">0</div><div class="stat-label">Prison</div></div>
+    <div class="stat-item"><div class="stat-num" id="sGarde">0</div><div class="stat-label">Garde à vue</div></div>
+    <div class="stat-item"><div class="stat-num" id="sSusp">0</div><div class="stat-label">Suspension</div></div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">⚖</span>
+      <input class="search-box" id="searchInput" type="text" placeholder="Rechercher un article, une infraction…">
+    </div>
+    <button class="btn btn-primary" onclick="openModal()">＋ Nouvel Article</button>
+    <button class="btn btn-secondary" onclick="exportData()">↓ Exporter</button>
+    <label class="btn btn-secondary" style="cursor:pointer">
+      ↑ Importer
+      <input type="file" accept=".json" style="display:none" onchange="importData(event)">
+    </label>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filter-bar" id="filterBar">
+    <span class="filter-label">Filtrer :</span>
+    <button class="chip active" data-cat="all" onclick="setFilter('all',this)">Tous</button>
+  </div>
+
+  <!-- LIST -->
+  <div class="section-heading">Articles en vigueur</div>
+  <div class="articles-list" id="articlesList"></div>
+
+</div>
+
+<!-- MODAL EDIT / ADD -->
+<div class="overlay" id="overlay" style="display:none" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Nouvel Article</div>
+      <button class="modal-close" onclick="closeModal()" title="Fermer">✕</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="flabel">Numéro d'article<span class="required-star">*</span></label>
+        <input class="finput" id="fNum" type="text" placeholder="ex: 121-1">
+      </div>
+      <div class="form-group">
+        <label class="flabel">Catégorie</label>
+        <input class="finput" id="fCat" type="text" placeholder="ex: Infractions routières" list="catList">
+        <datalist id="catList"></datalist>
+      </div>
+      <div class="form-group form-full">
+        <label class="flabel">Intitulé de l'infraction<span class="required-star">*</span></label>
+        <input class="finput" id="fTitre" type="text" placeholder="ex: Conduite sous l'emprise de stupéfiants">
+      </div>
+      <div class="form-group form-full">
+        <label class="flabel">Description / Détails</label>
+        <textarea class="ftextarea" id="fDesc" placeholder="Précisions sur l'infraction…"></textarea>
+      </div>
+    </div>
+
+    <div class="form-gap">
+      <div class="sanc-heading">Sanctions applicables</div>
+      <div class="s-builder" id="sBuilder"></div>
+      <button class="btn-add-sanc" onclick="addSRow()">＋ Ajouter une sanction</button>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="saveArticle()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="overlay" id="confirmOverlay" style="display:none">
+  <div class="confirm-box">
+    <div class="confirm-title">⚠ Suppression</div>
+    <p class="confirm-sub">Êtes-vous sûr de vouloir supprimer cet article définitivement ?</p>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" onclick="cancelDel()">Annuler</button>
+      <button class="btn" style="background:var(--red);border-color:var(--red);color:#fff" onclick="confirmDel()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════
+   CONFIG SANCTIONS
+════════════════════════════════════════ */
+const SANCTIONS = [
+  { v:'points',     e:'⬇', label:'Retrait de points',   cls:'stag-points',     units:['points'] },
+  { v:'prison',     e:'⛓', label:'Prison',              cls:'stag-prison',     units:['heures','jours','mois','ans'] },
+  { v:'garde',      e:'🔒', label:'Garde à vue',         cls:'stag-garde',      units:['heures','jours'] },
+  { v:'suspension', e:'🚫', label:'Suspension de permis',cls:'stag-suspension', units:['jours','semaines','mois','ans'] },
+  { v:'permis',     e:'🗑', label:'Annulation permis',   cls:'stag-permis',     units:['mois','ans'] },
+  { v:'autre',      e:'📌', label:'Autre sanction',      cls:'stag-autre',      units:[] },
+];
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+const STORE = 'codepenal_v4';
+let articles = [];
+let editId = null;
+let delId = null;
+let activeFilter = 'all';
+
+function load() {
+  try { articles = JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { articles = []; }
+  if (!articles.length) articles = defaults();
+  save();
+}
+function save() { localStorage.setItem(STORE, JSON.stringify(articles)); render(); }
+
+/* ════════════════════════════════════════
+   RENDER
+════════════════════════════════════════ */
+function render() {
+  updateStats();
+  updateFilters();
+  renderList();
+}
+
+function updateStats() {
+  const a = articles;
+  q('sTotal').textContent  = a.length;
+  q('sPoints').textContent = a.filter(x => has(x,'points')).length;
+  q('sPrison').textContent = a.filter(x => has(x,'prison')).length;
+  q('sGarde').textContent  = a.filter(x => has(x,'garde')).length;
+  q('sSusp').textContent   = a.filter(x => has(x,'suspension')||has(x,'permis')).length;
+}
+function has(a,t){ return (a.sanctions||[]).some(s=>s.type===t); }
+
+function updateFilters() {
+  const cats = [...new Set(articles.map(a=>a.cat).filter(Boolean))].sort();
+  const bar = q('filterBar');
+  bar.innerHTML = '';
+  const lbl = document.createElement('span');
+  lbl.className = 'filter-label';
+  lbl.textContent = 'Filtrer :';
+  bar.appendChild(lbl);
+
+  const allBtn = chip('Tous','all', activeFilter==='all');
+  bar.appendChild(allBtn);
+  cats.forEach(c => bar.appendChild(chip(c,c, activeFilter===c)));
+
+  // datalist
+  q('catList').innerHTML = cats.map(c=>`<option value="${e(c)}">`).join('');
+}
+function chip(label, cat, active) {
+  const b = document.createElement('button');
+  b.className = 'chip' + (active?' active':'');
+  b.dataset.cat = cat;
+  b.textContent = label;
+  b.onclick = () => setFilter(cat, b);
+  return b;
+}
+function setFilter(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderList();
+}
+
+function renderList() {
+  const qStr = q('searchInput').value.toLowerCase().trim();
+  const list = q('articlesList');
+
+  const filtered = articles.filter(a => {
+    if (activeFilter !== 'all' && a.cat !== activeFilter) return false;
+    if (!qStr) return true;
+    return (a.num+a.titre+(a.cat||'')+(a.desc||'')).toLowerCase().includes(qStr);
+  });
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty">
+      <span class="empty-icon">⚖️</span>
+      <div class="empty-title">${articles.length===0?'Aucun article pour le moment':'Aucun résultat'}</div>
+      <p class="empty-sub">${articles.length===0?'Cliquez sur « Nouvel Article » pour commencer.':'Essayez une autre recherche.'}</p>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map((a, i) => `
+    <div class="article-card" style="animation-delay:${Math.min(i*0.04,0.5)}s">
+      <div class="article-num-badge">
+        § Art. ${e(a.num)}
+        ${a.cat ? `<span class="article-cat">${e(a.cat)}</span>` : ''}
+      </div>
+      <div class="article-title">${e(a.titre)}</div>
+      ${a.desc ? `<div class="article-desc">${e(a.desc)}</div>` : ''}
+      <div class="sanctions-row">${(a.sanctions||[]).map(renderTag).join('')}</div>
+      <div class="article-actions">
+        <button class="btn-card btn-edit-card" onclick="openModal('${a.id}')">✎ Modifier</button>
+        <button class="btn-card btn-del-card" onclick="askDel('${a.id}')">✕ Supprimer</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTag(s) {
+  const def = SANCTIONS.find(d=>d.v===s.type);
+  if (!def) return '';
+  let text;
+  if (s.type === 'autre') {
+    text = e(s.valeur||'—');
+  } else {
+    const val = parseInt(s.valeur)||0;
+    const unite = s.unite || (def.units[0]||'');
+    text = `${e(def.label)} : <strong>${val} ${e(unite)}</strong>`;
+  }
+  return `<span class="stag ${def.cls}"><span>${def.e}</span>${text}</span>`;
+}
+
+/* ════════════════════════════════════════
+   MODAL
+════════════════════════════════════════ */
+function openModal(id=null) {
+  editId = id;
+  q('overlay').style.display = 'flex';
+  q('sBuilder').innerHTML = '';
+
+  if (id) {
+    const a = articles.find(x=>x.id===id);
+    q('modalTitle').textContent = "Modifier l'article";
+    q('fNum').value   = a.num;
+    q('fCat').value   = a.cat||'';
+    q('fTitre').value = a.titre;
+    q('fDesc').value  = a.desc||'';
+    (a.sanctions||[]).forEach(s=>addSRow(s));
+  } else {
+    q('modalTitle').textContent = 'Nouvel Article';
+    ['fNum','fCat','fTitre','fDesc'].forEach(id=>q(id).value='');
+  }
+}
+function closeModal() { q('overlay').style.display='none'; editId=null; }
+function handleOverlayClick(ev) { if(ev.target===ev.currentTarget) closeModal(); }
+
+/* ─── Sanction rows ─── */
+function addSRow(s=null) {
+  const builder = q('sBuilder');
+  const div = document.createElement('div');
+  const typeVal = s ? s.type : 'points';
+  const isAutre = typeVal === 'autre';
+  div.className = 's-row' + (isAutre?' mode-autre':'');
+
+  // type select
+  const selEl = document.createElement('select');
+  selEl.className = 's-select';
+  SANCTIONS.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.v;
+    opt.textContent = `${d.e} ${d.label}`;
+    if (d.v === typeVal) opt.selected = true;
+    selEl.appendChild(opt);
+  });
+  selEl.onchange = function() { rebuildSRow(div, this.value); };
+  div.appendChild(selEl);
+
+  // val & unite
+  appendValFields(div, typeVal, s ? s.valeur : '', s ? s.unite : '');
+
+  // remove btn
+  const rmBtn = document.createElement('button');
+  rmBtn.type = 'button';
+  rmBtn.className = 's-remove';
+  rmBtn.title = 'Supprimer';
+  rmBtn.textContent = '✕';
+  rmBtn.onclick = () => div.remove();
+  div.appendChild(rmBtn);
+
+  builder.appendChild(div);
+}
+
+function appendValFields(row, type, valeur='', unite='') {
+  const def = SANCTIONS.find(d=>d.v===type);
+  const isAutre = type === 'autre';
+
+  if (isAutre) {
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 's-val';
+    inp.placeholder = 'Détail de la sanction…';
+    inp.value = valeur;
+    inp.style.gridColumn = '2 / 4';
+    row.appendChild(inp);
+  } else {
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.className = 's-val';
+    inp.min = '1';
+    inp.placeholder = '—';
+    inp.value = valeur;
+    row.appendChild(inp);
+
+    const selUnite = document.createElement('select');
+    selUnite.className = 's-unite';
+    (def ? def.units : []).forEach(u => {
+      const opt = document.createElement('option');
+      opt.value = u;
+      opt.textContent = u;
+      if (u === unite) opt.selected = true;
+      selUnite.appendChild(opt);
+    });
+    row.appendChild(selUnite);
+  }
+}
+
+function rebuildSRow(row, newType) {
+  // remove val & unite elements (keep select & remove btn)
+  row.querySelectorAll('.s-val, .s-unite').forEach(el=>el.remove());
+  const rmBtn = row.querySelector('.s-remove');
+  const isAutre = newType === 'autre';
+  row.className = 's-row' + (isAutre?' mode-autre':'');
+  // insert before remove btn
+  const tmp = document.createElement('div');
+  row.insertBefore(tmp, rmBtn);
+  appendValFields({ appendChild: el => row.insertBefore(el, rmBtn) }, newType, '', '');
+  tmp.remove();
+}
+
+/* ─── Save ─── */
+function saveArticle() {
+  const num   = q('fNum').value.trim();
+  const titre = q('fTitre').value.trim();
+  if (!num)   { flashField('fNum','Numéro requis !'); return; }
+  if (!titre) { flashField('fTitre','Intitulé requis !'); return; }
+
+  const sanctions = [];
+  q('sBuilder').querySelectorAll('.s-row').forEach(row => {
+    const type   = row.querySelector('.s-select').value;
+    const valEl  = row.querySelector('.s-val');
+    const uniteEl= row.querySelector('.s-unite');
+    const valeur = valEl ? valEl.value.trim() : '';
+    const unite  = uniteEl ? uniteEl.value : '';
+    if (valeur) sanctions.push({type, valeur, unite});
+  });
+
+  const data = { num, cat: q('fCat').value.trim(), titre, desc: q('fDesc').value.trim(), sanctions };
+
+  if (editId) {
+    const idx = articles.findIndex(a=>a.id===editId);
+    articles[idx] = { ...articles[idx], ...data };
+  } else {
+    articles.push({ id: uid(), ...data });
+  }
+  save();
+  closeModal();
+}
+
+function flashField(id, msg) {
+  const el = q(id);
+  el.style.borderColor = 'var(--red-light)';
+  const prev = el.placeholder;
+  el.placeholder = msg;
+  el.focus();
+  setTimeout(() => { el.style.borderColor=''; el.placeholder=prev; }, 1800);
+}
+
+/* ════════════════════════════════════════
+   DELETE
+════════════════════════════════════════ */
+function askDel(id) { delId=id; q('confirmOverlay').style.display='flex'; }
+function cancelDel() { delId=null; q('confirmOverlay').style.display='none'; }
+function confirmDel() {
+  articles = articles.filter(a=>a.id!==delId);
+  delId=null;
+  q('confirmOverlay').style.display='none';
+  save();
+}
+
+/* ════════════════════════════════════════
+   IMPORT / EXPORT
+════════════════════════════════════════ */
+function exportData() {
+  const blob = new Blob([JSON.stringify(articles,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'code_penal.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importData(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) throw new Error();
+      if (confirm(`Importer ${data.length} article(s) ? Les articles actuels seront remplacés.`)) {
+        articles = data;
+        save();
+      }
+    } catch { alert('Fichier JSON invalide.'); }
+  };
+  reader.readAsText(file);
+  ev.target.value='';
+}
+
+/* ════════════════════════════════════════
+   UTILS
+════════════════════════════════════════ */
+function q(id) { return document.getElementById(id); }
+function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function e(s) {
+  if (s==null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.getElementById('searchInput').addEventListener('input', renderList);
+document.addEventListener('keydown', ev => { if(ev.key==='Escape'){closeModal();cancelDel();} });
+
+/* ════════════════════════════════════════
+   EXEMPLES PAR DÉFAUT
+════════════════════════════════════════ */
+function defaults() {
+  return [
+    {
+      id:uid(), num:'121-1', cat:'Infractions routières',
+      titre:'Conduite sous l\'emprise de stupéfiants',
+      desc:'Toute personne surprise au volant sous influence avérée de produits stupéfiants.',
+      sanctions:[
+        {type:'points',valeur:'6',unite:'points'},
+        {type:'garde',valeur:'24',unite:'heures'},
+        {type:'suspension',valeur:'3',unite:'mois'}
+      ]
+    },
+    {
+      id:uid(), num:'121-2', cat:'Infractions routières',
+      titre:'Grand excès de vitesse (+50 km/h)',
+      desc:'Dépassement de la vitesse autorisée de plus de 50 km/h constaté.',
+      sanctions:[
+        {type:'points',valeur:'6',unite:'points'},
+        {type:'suspension',valeur:'6',unite:'mois'}
+      ]
+    },
+    {
+      id:uid(), num:'131-4', cat:'Atteintes aux personnes',
+      titre:'Coups et blessures volontaires',
+      desc:'Violences volontaires ayant entraîné une incapacité totale de travail.',
+      sanctions:[
+        {type:'prison',valeur:'6',unite:'mois'},
+        {type:'garde',valeur:'48',unite:'heures'}
+      ]
+    },
+    {
+      id:uid(), num:'222-1', cat:'Crimes graves',
+      titre:'Homicide volontaire',
+      desc:'Le fait de donner intentionnellement la mort à autrui.',
+      sanctions:[
+        {type:'prison',valeur:'30',unite:'ans'},
+        {type:'permis',valeur:'5',unite:'ans'}
+      ]
+    },
+    {
+      id:uid(), num:'311-1', cat:'Infractions contre les biens',
+      titre:'Vol simple',
+      desc:'Soustraction frauduleuse d\'une chose appartenant à autrui.',
+      sanctions:[
+        {type:'prison',valeur:'3',unite:'mois'},
+        {type:'garde',valeur:'24',unite:'heures'}
+      ]
+    }
+  ];
+}
+
+load();
+</script>
+</body>
+</html>
