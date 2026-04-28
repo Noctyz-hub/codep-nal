@@ -1,226 +1,1639 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Pénal — Recueil Officiel</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Pénal — République</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   DESIGN DIRECTION: Futuristic Legal OS
+   Palette: Off-white (#F5F2ED) + deep ink (#0A0C10) + electric red (#E63946)
+   Feel: Terminal meets luxury codex
+───────────────────────────────────────── */
+
+:root {
+  --ink:      #0A0C10;
+  --ink2:     #141820;
+  --ink3:     #1E2430;
+  --paper:    #F5F2ED;
+  --paper2:   #EDE9E2;
+  --paper3:   #E2DDD5;
+  --red:      #E63946;
+  --red-dim:  rgba(230,57,70,0.15);
+  --red-glow: rgba(230,57,70,0.08);
+  --blue:     #2D6BE4;
+  --blue-dim: rgba(45,107,228,0.12);
+  --amber:    #F4A261;
+  --teal:     #2EC4B6;
+  --violet:   #7B5EA7;
+  --border:   rgba(10,12,16,0.1);
+  --border2:  rgba(10,12,16,0.18);
+  --muted:    #8C8880;
+  --shadow:   0 4px 24px rgba(10,12,16,0.08), 0 1px 4px rgba(10,12,16,0.06);
+  --shadow-lg:0 16px 48px rgba(10,12,16,0.14), 0 4px 12px rgba(10,12,16,0.1);
+  --r:        6px;
+  --r-lg:     14px;
+  --ease:     cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════
+   TOPBAR
+═══════════════════════ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 58px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-badge {
+  width: 32px;
+  height: 32px;
+  background: var(--red);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.brand-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  padding-left: 14px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lock-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.5px;
+  transition: all 0.2s var(--ease);
+  cursor: default;
+}
+.lock-pill.unlocked {
+  background: rgba(46,196,182,0.12);
+  border-color: rgba(46,196,182,0.3);
+  color: var(--teal);
+}
+.lock-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transition: all 0.2s;
+}
+.lock-pill.unlocked .lock-dot {
+  background: var(--teal);
+  box-shadow: 0 0 6px var(--teal);
+}
+
+.btn-new {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  background: var(--red);
+  border: none;
+  border-radius: var(--r);
+  color: #fff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.btn-new:hover {
+  background: #f0424f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(230,57,70,0.4);
+}
+.btn-new svg { flex-shrink: 0; }
+
+/* ═══════════════════════
+   HERO STRIP
+═══════════════════════ */
+.hero-strip {
+  background: var(--ink);
+  padding: 48px 32px 40px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.hero-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.hero-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 0.95;
+  letter-spacing: -2px;
+}
+.hero-title .dim { color: rgba(255,255,255,0.2); font-weight: 400; }
+
+.hero-sub {
+  margin-top: 14px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Stats in hero */
+.hero-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+  padding-bottom: 4px;
+}
+.hstat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  min-width: 180px;
+}
+.hstat:last-child { border-bottom: none; }
+.hstat-num {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  min-width: 36px;
+  text-align: right;
+}
+.hstat-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.hstat-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.hstat-fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 1px;
+  transition: width 0.6s var(--ease);
+}
+
+/* ═══════════════════════
+   MAIN LAYOUT
+═══════════════════════ */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: calc(100vh - 58px - 168px);
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  background: var(--ink2);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  padding: 28px 20px;
+  position: sticky;
+  top: 58px;
+  height: calc(100vh - 58px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+.s-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+
+.search-wrap { position: relative; }
+.search-icon {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.25);
+  pointer-events: none;
+  font-size: 13px;
+}
+.search-box {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 13px;
+  padding: 9px 12px 9px 36px;
+  border-radius: var(--r);
+  outline: none;
+  transition: all 0.2s;
+}
+.search-box::placeholder { color: rgba(255,255,255,0.2); }
+.search-box:focus {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(230,57,70,0.5);
+  box-shadow: 0 0 0 3px rgba(230,57,70,0.08);
+}
+
+/* Category filters */
+.cat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cat-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: var(--r);
+  color: rgba(255,255,255,0.4);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+.cat-btn:hover {
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.7);
+}
+.cat-btn.active {
+  background: var(--red-dim);
+  color: #fff;
+  font-weight: 500;
+}
+.cat-count {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.3);
+}
+.cat-btn.active .cat-count {
+  background: var(--red);
+  color: #fff;
+}
+
+/* ─── CONTENT AREA ─── */
+.content-area {
+  padding: 32px;
+  background: var(--paper);
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.view-count {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--paper2);
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─── ARTICLE CARDS ─── */
+.articles-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.a-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.2s var(--ease);
+  animation: cardIn 0.35s var(--ease) both;
+  position: relative;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.a-card:hover {
+  border-color: rgba(10,12,16,0.22);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+
+.a-card-inner {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+}
+
+/* Number column */
+.a-num-col {
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  gap: 6px;
+  min-height: 100%;
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+}
+.a-num-text {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 1px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+.a-num-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+/* Body */
+.a-body {
+  padding: 18px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.a-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.a-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.a-cat-pill {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: var(--paper2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.a-actions {
+  display: flex;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.a-card:hover .a-actions { opacity: 1; }
+
+.btn-icon {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 12px;
+}
+.btn-icon:hover { background: var(--paper2); border-color: var(--border2); color: var(--ink); }
+.btn-icon.danger:hover { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+
+.a-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+}
+
+.a-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.a-sanctions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 4px;
+  border-top: 1px solid var(--paper2);
+}
+.s-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid;
+}
+.sc-points    { color: #c0392b; border-color: rgba(192,57,43,0.25); background: rgba(192,57,43,0.06); }
+.sc-prison    { color: var(--blue); border-color: rgba(45,107,228,0.25); background: var(--blue-dim); }
+.sc-garde     { color: #c07830; border-color: rgba(192,120,48,0.25); background: rgba(244,162,97,0.1); }
+.sc-suspension{ color: var(--violet); border-color: rgba(123,94,167,0.25); background: rgba(123,94,167,0.08); }
+.sc-permis    { color: var(--teal); border-color: rgba(46,196,182,0.25); background: rgba(46,196,182,0.08); }
+.sc-autre     { color: var(--muted); border-color: var(--border2); background: var(--paper2); }
+.s-chip-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* ─── EMPTY STATE ─── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  gap: 12px;
+}
+.empty-icon {
+  width: 64px; height: 64px;
+  background: var(--paper2);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+.empty-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.empty-sub { font-size: 13px; color: var(--muted); text-align: center; }
+
+/* ═══════════════════════
+   MODALS
+═══════════════════════ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,12,16,0.7);
+  backdrop-filter: blur(10px) saturate(0.6);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: overlayIn 0.2s ease;
+}
+@keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Edit modal */
+.modal {
+  background: #fff;
+  border: 1px solid var(--border2);
+  border-radius: var(--r-lg);
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+.modal-top {
+  background: var(--ink);
+  padding: 28px 28px 24px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.modal-eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+.modal-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.modal-x {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r);
+  color: rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.modal-x:hover { background: rgba(230,57,70,0.2); border-color: var(--red); color: var(--red); }
+
+.modal-body {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-span { grid-column: 1 / -1; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.f-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.req { color: var(--red); margin-left: 2px; }
+.f-input, .f-textarea {
+  background: var(--paper);
+  border: 1px solid var(--border2);
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: var(--r);
+  outline: none;
+  transition: all 0.15s;
+  width: 100%;
+}
+.f-input:focus, .f-textarea:focus {
+  border-color: var(--ink);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(10,12,16,0.06);
+}
+.f-input::placeholder, .f-textarea::placeholder { color: rgba(10,12,16,0.25); }
+.f-textarea { resize: vertical; min-height: 80px; }
+
+/* Sanctions builder */
+.sanc-section {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.sanc-top {
+  padding: 12px 16px;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sanc-top-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.btn-add-sanc {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 11px;
+  background: var(--ink);
+  border: none;
+  border-radius: var(--r);
+  color: #fff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-add-sanc:hover { background: var(--red); }
+
+.s-builder {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 8px;
+}
+
+.s-row {
+  display: grid;
+  grid-template-columns: 1.4fr 70px 90px 30px;
+  gap: 6px;
+  align-items: center;
+  animation: cardIn 0.2s ease;
+}
+.s-row.mode-autre { grid-template-columns: 1.4fr 1fr 30px; }
+
+.s-select, .s-val, .s-unite {
+  background: #fff;
+  border: 1px solid var(--border2);
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 13px;
+  padding: 7px 9px;
+  border-radius: var(--r);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.s-select, .s-unite { appearance: none; cursor: pointer; }
+.s-select:focus, .s-val:focus, .s-unite:focus { border-color: var(--ink); }
+.s-val { text-align: center; }
+
+.s-rm {
+  width: 30px; height: 30px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.s-rm:hover { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+
+.modal-footer {
+  padding: 16px 28px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.btn-cancel {
+  padding: 9px 20px;
+  background: transparent;
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  color: var(--muted);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-cancel:hover { border-color: var(--border2); color: var(--ink); background: var(--paper); }
+.btn-save {
+  padding: 9px 22px;
+  background: var(--ink);
+  border: none;
+  border-radius: var(--r);
+  color: #fff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 7px;
+}
+.btn-save:hover { background: var(--red); box-shadow: 0 4px 14px rgba(230,57,70,0.3); transform: translateY(-1px); }
+
+/* ─── Confirm ─── */
+.confirm-box {
+  background: #fff;
+  border-radius: var(--r-lg);
+  width: 100%;
+  max-width: 380px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: modalIn 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.confirm-header {
+  background: var(--red);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.confirm-icon-wrap {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.confirm-h-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+.confirm-body {
+  padding: 24px;
+}
+.confirm-text {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+.confirm-actions { display: flex; gap: 10px; }
+
+/* ─── Password ─── */
+.pwd-box {
+  background: var(--ink2);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-lg);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+  position: relative;
+}
+.pwd-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 30px; height: 30px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r);
+  color: rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; cursor: pointer;
+  transition: all 0.15s;
+}
+.pwd-close:hover { border-color: var(--red); color: var(--red); }
+.pwd-lock-icon {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--red), #c0293a);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 24px rgba(230,57,70,0.35);
+}
+.pwd-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.4px;
+  margin-bottom: 6px;
+}
+.pwd-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 24px;
+  line-height: 1.55;
+}
+.pwd-input-wrap { position: relative; margin-bottom: 8px; }
+.pwd-input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 13px 44px 13px 16px;
+  border-radius: var(--r);
+  outline: none;
+  text-align: center;
+  letter-spacing: 8px;
+  transition: all 0.2s;
+}
+.pwd-input:focus {
+  border-color: rgba(230,57,70,0.6);
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 0 0 3px rgba(230,57,70,0.12);
+}
+.pwd-input.error { border-color: var(--red); animation: shake 0.4s ease; }
+@keyframes shake {
+  0%,100%{ transform:translateX(0) }
+  20%    { transform:translateX(-6px) }
+  40%    { transform:translateX(6px) }
+  60%    { transform:translateX(-4px) }
+  80%    { transform:translateX(4px) }
+}
+.pwd-eye {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: transparent; border: none;
+  color: rgba(255,255,255,0.25); cursor: pointer; font-size: 16px;
+  padding: 4px; transition: color 0.15s;
+}
+.pwd-eye:hover { color: rgba(255,255,255,0.6); }
+.pwd-err {
+  font-size: 12px;
+  color: var(--red);
+  min-height: 18px;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+.pwd-btns { display: flex; gap: 8px; }
+.pwd-btns .btn-cancel {
+  flex: 1;
+  border-color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.4);
+  background: transparent;
+  justify-content: center;
+}
+.pwd-btns .btn-cancel:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); }
+.pwd-btns .btn-save { flex: 1; justify-content: center; }
+
+/* field error flash */
+.f-error {
+  border-color: var(--red) !important;
+  box-shadow: 0 0 0 3px rgba(230,57,70,0.1) !important;
+  animation: shake 0.35s ease;
+}
+
+/* ═══════════════════════
+   SCROLLBAR
+═══════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ═══════════════════════
+   RESPONSIVE
+═══════════════════════ */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; padding: 20px; flex-direction: row; flex-wrap: wrap; gap: 16px; }
+  .cat-list { flex-direction: row; flex-wrap: wrap; }
+  .cat-btn { width: auto; }
+  .sidebar > div { min-width: 200px; }
+  .hero-strip { grid-template-columns: 1fr; padding: 32px 20px 28px; }
+  .hero-stats { align-items: flex-start; }
+  .hstat { min-width: unset; width: 100%; }
+  .content-area { padding: 20px; }
+}
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
+  .form-span { grid-column: 1; }
+  .topbar { padding: 0 16px; }
+  .brand-tag { display: none; }
+  .s-row { grid-template-columns: 1fr 60px 30px; }
+  .s-row .s-select { grid-column: 1 / -1; }
+  .s-row.mode-autre { grid-template-columns: 1fr 30px; }
+  .s-row.mode-autre .s-select { grid-column: 1; }
+  .modal { border-radius: var(--r-lg); }
+  .a-actions { opacity: 1; }
+}
+</style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════
-     HERO HEADER
-════════════════════════════════════════ -->
-<header class="hero">
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-eyebrow">
-        <div class="hero-eyebrow-line"></div>
-        <span class="hero-eyebrow-text">République · Jeu de Rôle</span>
-      </div>
-      <h1 class="hero-title">Code Pénal</h1>
-      <p class="hero-subtitle">Recueil officiel des infractions &amp; sanctions applicables</p>
-    </div>
-    <div class="hero-meta">
-      <div class="lock-status" id="lockBadge">
-        <span class="lock-dot"></span>
-        <span id="lockLabel">Accès protégé</span>
-      </div>
-    </div>
+<!-- ── TOPBAR ── -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-badge">⚖</div>
+    <span class="brand-name">Code Pénal</span>
+    <span class="brand-tag">République · JDR</span>
   </div>
-  <div class="hero-divider"></div>
-</header>
+  <div class="topbar-right">
+    <div class="lock-pill" id="lockBadge">
+      <span class="lock-dot"></span>
+      <span id="lockLabel">Accès protégé</span>
+    </div>
+    <button class="btn-new" onclick="requirePwd({type:'add'})">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6.5 1.5v10M1.5 6.5h10"/></svg>
+      Nouvel article
+    </button>
+  </div>
+</div>
 
-<!-- ═══════════════════════════════════════
-     STATS RIBBON
-════════════════════════════════════════ -->
-<div class="stats-ribbon">
-  <div class="stats-inner">
-    <div class="stat-item">
-      <span class="stat-icon">⚖️</span>
-      <div class="stat-content">
-        <div class="stat-num" id="sTotal">0</div>
-        <div class="stat-label">Articles</div>
-      </div>
+<!-- ── HERO STRIP ── -->
+<div class="hero-strip">
+  <div>
+    <div class="hero-eyebrow">Recueil officiel</div>
+    <div class="hero-title">Code<br><span class="dim">Pénal</span></div>
+    <div class="hero-sub">Infractions &amp; sanctions applicables</div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-num" id="sTotal">0</div>
+      <div class="hstat-bar"><div class="hstat-fill" id="bTotal" style="width:100%"></div></div>
+      <div class="hstat-label">Articles</div>
     </div>
-    <div class="stat-item">
-      <span class="stat-icon">⬇️</span>
-      <div class="stat-content">
-        <div class="stat-num" id="sPoints">0</div>
-        <div class="stat-label">Retrait pts</div>
-      </div>
+    <div class="hstat">
+      <div class="hstat-num" id="sPrison">0</div>
+      <div class="hstat-bar"><div class="hstat-fill" id="bPrison" style="width:0%"></div></div>
+      <div class="hstat-label">Prison</div>
     </div>
-    <div class="stat-item">
-      <span class="stat-icon">⛓️</span>
-      <div class="stat-content">
-        <div class="stat-num" id="sPrison">0</div>
-        <div class="stat-label">Prison</div>
-      </div>
+    <div class="hstat">
+      <div class="hstat-num" id="sGarde">0</div>
+      <div class="hstat-bar"><div class="hstat-fill" id="bGarde" style="width:0%"></div></div>
+      <div class="hstat-label">Garde à vue</div>
     </div>
-    <div class="stat-item">
-      <span class="stat-icon">🔒</span>
-      <div class="stat-content">
-        <div class="stat-num" id="sGarde">0</div>
-        <div class="stat-label">Garde à vue</div>
-      </div>
+    <div class="hstat">
+      <div class="hstat-num" id="sPoints">0</div>
+      <div class="hstat-bar"><div class="hstat-fill" id="bPoints" style="width:0%"></div></div>
+      <div class="hstat-label">Retrait pts</div>
     </div>
-    <div class="stat-item">
-      <span class="stat-icon">🚫</span>
-      <div class="stat-content">
-        <div class="stat-num" id="sSusp">0</div>
-        <div class="stat-label">Suspension</div>
-      </div>
+    <div class="hstat">
+      <div class="hstat-num" id="sSusp">0</div>
+      <div class="hstat-bar"><div class="hstat-fill" id="bSusp" style="width:0%"></div></div>
+      <div class="hstat-label">Suspension</div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MAIN LAYOUT
-════════════════════════════════════════ -->
-<div class="main">
+<!-- ── LAYOUT ── -->
+<div class="layout">
 
-  <!-- ─── SIDEBAR ─── -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-
-    <div class="sidebar-section">
-      <div class="sidebar-label">Recherche</div>
-      <input
-        class="search-box"
-        id="searchInput"
-        type="text"
-        placeholder="Rechercher…"
-        autocomplete="off"
-      >
-      <datalist id="catDatalist"></datalist>
+    <div>
+      <div class="s-label">Recherche</div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-box" id="searchInput" type="text" placeholder="Article, infraction…" autocomplete="off">
+        <datalist id="catDatalist"></datalist>
+      </div>
     </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-label">Catégories</div>
+    <div>
+      <div class="s-label">Catégories</div>
       <div class="cat-list" id="catList"></div>
     </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-label">Actions</div>
-      <div class="action-group">
-        <button class="btn-action btn-primary" onclick="requirePwd({type:'add'})">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M7 2v10M2 7h10"/>
-          </svg>
-          Nouvel Article
-        </button>
-      </div>
-    </div>
-
   </aside>
 
-  <!-- ─── CONTENT ─── -->
-  <main class="content">
-    <div class="content-header">
-      <span class="content-title">Articles en vigueur</span>
-      <span class="content-count" id="contentCount">—</span>
+  <!-- CONTENT -->
+  <div class="content-area">
+    <div class="toolbar-row">
+      <div class="toolbar-left">
+        <span class="section-label">Articles en vigueur</span>
+      </div>
+      <span class="view-count" id="contentCount">—</span>
     </div>
-    <div class="articles-list" id="articlesList"></div>
-  </main>
+    <div class="articles-grid" id="articlesList"></div>
+  </div>
 
 </div>
 
-<!-- ═══════════════════════════════════════
-     MODAL — AJOUT / ÉDITION
-════════════════════════════════════════ -->
-<div class="overlay" id="editOverlay" style="display:none">
+<!-- ══ MODAL EDIT ══ -->
+<div class="overlay" id="editOverlay" style="display:none" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-header">
+    <div class="modal-top">
       <div>
-        <div class="modal-eyebrow" id="modalEyebrow">Création</div>
+        <div class="modal-eyebrow" id="modalEye">Création</div>
         <div class="modal-title" id="modalTitle">Nouvel Article</div>
       </div>
-      <button class="modal-close" onclick="closeModal()" title="Fermer">✕</button>
+      <button class="modal-x" onclick="closeModal()">✕</button>
     </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="f-label" for="fNum">N° d'article<span class="req">*</span></label>
+          <input class="f-input" id="fNum" type="text" placeholder="ex : 121-1">
+        </div>
+        <div class="form-field">
+          <label class="f-label" for="fCat">Catégorie</label>
+          <input class="f-input" id="fCat" type="text" placeholder="ex : Infractions routières" list="catDatalist">
+        </div>
+      </div>
+      <div class="form-field form-span">
+        <label class="f-label" for="fTitre">Intitulé de l'infraction<span class="req">*</span></label>
+        <input class="f-input" id="fTitre" type="text" placeholder="ex : Conduite sous l'emprise de stupéfiants">
+      </div>
+      <div class="form-field">
+        <label class="f-label" for="fDesc">Description</label>
+        <textarea class="f-textarea" id="fDesc" placeholder="Précisions, contexte…"></textarea>
+      </div>
 
-    <div class="form-grid">
-      <div class="form-group">
-        <label class="flabel" for="fNum">Numéro d'article<span class="req">*</span></label>
-        <input class="finput" id="fNum" type="text" placeholder="ex : 121-1">
-      </div>
-      <div class="form-group">
-        <label class="flabel" for="fCat">Catégorie</label>
-        <input class="finput" id="fCat" type="text" placeholder="ex : Infractions routières" list="catDatalist">
-      </div>
-      <div class="form-group form-full">
-        <label class="flabel" for="fTitre">Intitulé de l'infraction<span class="req">*</span></label>
-        <input class="finput" id="fTitre" type="text" placeholder="ex : Conduite sous l'emprise de stupéfiants">
-      </div>
-      <div class="form-group form-full">
-        <label class="flabel" for="fDesc">Description / Détails</label>
-        <textarea class="ftextarea" id="fDesc" placeholder="Précisions sur l'infraction…"></textarea>
+      <div class="sanc-section">
+        <div class="sanc-top">
+          <span class="sanc-top-label">Sanctions applicables</span>
+          <button class="btn-add-sanc" onclick="addSRow()">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5.5 1v9M1 5.5h9"/></svg>
+            Ajouter
+          </button>
+        </div>
+        <div class="s-builder" id="sBuilder"></div>
       </div>
     </div>
-
-    <div class="form-gap">
-      <div class="sanc-header">Sanctions applicables</div>
-      <div class="s-builder" id="sBuilder"></div>
-      <button class="btn-add-sanc" type="button" onclick="addSRow()">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M6.5 1v11M1 6.5h11"/>
-        </svg>
-        Ajouter une sanction
-      </button>
-    </div>
-
     <div class="modal-footer">
-      <button class="btn-modal btn-modal-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn-modal btn-modal-save" onclick="saveArticle()">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <path d="M2 7l3.5 3.5L11 3"/>
-        </svg>
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-save" onclick="saveArticle()">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 7l3.5 3.5L11 3"/></svg>
         Enregistrer
       </button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MODAL — CONFIRMATION SUPPRESSION
-════════════════════════════════════════ -->
+<!-- ══ MODAL CONFIRM DELETE ══ -->
 <div class="overlay" id="confirmOverlay" style="display:none">
   <div class="confirm-box">
-    <span class="confirm-icon">⚠️</span>
-    <div class="confirm-title">Supprimer l'article ?</div>
-    <p class="confirm-sub">Cette action est irréversible. L'article sera définitivement effacé du recueil.</p>
-    <div class="confirm-actions">
-      <button class="btn-modal btn-modal-cancel" onclick="cancelDelete()">Annuler</button>
-      <button class="btn-modal btn-danger" onclick="confirmDelete()">Supprimer</button>
+    <div class="confirm-header">
+      <div class="confirm-icon-wrap">⚠️</div>
+      <div class="confirm-h-title">Supprimer l'article ?</div>
+    </div>
+    <div class="confirm-body">
+      <p class="confirm-text">Cette action est définitive. L'article sera supprimé du recueil et ne pourra pas être récupéré.</p>
+      <div class="confirm-actions">
+        <button class="btn-cancel" onclick="cancelDelete()" style="flex:1;text-align:center">Annuler</button>
+        <button class="btn-save" onclick="confirmDelete()" style="flex:1;justify-content:center;background:var(--red)">Supprimer</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MODAL — MOT DE PASSE
-════════════════════════════════════════ -->
-<div class="overlay" id="pwdOverlay" style="display:none">
+<!-- ══ MODAL PASSWORD ══ -->
+<div class="overlay" id="pwdOverlay" style="display:none" onclick="if(event.target===this)closePwd()">
   <div class="pwd-box">
-    <button class="pwd-close" onclick="closePwd()" title="Fermer">✕</button>
-    <span class="pwd-icon">🔐</span>
-    <div class="pwd-title">Accès Restreint</div>
-    <p class="pwd-sub">Entrez le mot de passe administrateur pour accéder à cette fonctionnalité.</p>
-    <div class="pwd-wrap">
-      <input
-        class="pwd-input"
-        id="pwdInput"
-        type="password"
-        placeholder="••••••"
-        maxlength="20"
-      >
-      <button class="pwd-toggle" id="pwdToggle" onclick="togglePwdVis()" title="Afficher / Masquer">👁</button>
+    <button class="pwd-close" onclick="closePwd()">✕</button>
+    <div class="pwd-lock-icon">🔐</div>
+    <div class="pwd-title">Accès restreint</div>
+    <p class="pwd-sub">Entrez le mot de passe administrateur pour continuer.</p>
+    <div class="pwd-input-wrap">
+      <input class="pwd-input" id="pwdInput" type="password" placeholder="••••••" maxlength="20">
+      <button class="pwd-eye" id="pwdEye" onclick="togglePwd()">👁</button>
     </div>
     <div class="pwd-err" id="pwdErr"></div>
-    <div class="pwd-actions">
-      <button class="btn-modal btn-modal-cancel" onclick="closePwd()">Annuler</button>
-      <button class="btn-modal btn-modal-save" onclick="checkPwd()">🔓 Valider</button>
+    <div class="pwd-btns">
+      <button class="btn-cancel" onclick="closePwd()">Annuler</button>
+      <button class="btn-save" onclick="checkPwd()">Valider</button>
     </div>
   </div>
 </div>
 
-<script src="app.js"></script>
+<script>
+/* ════════ CONFIG ════════ */
+const SANCTIONS_CFG = [
+  { v:'points',     e:'🔴', label:'Retrait de points',    cls:'sc-points',     units:['points'] },
+  { v:'prison',     e:'🔵', label:'Prison',               cls:'sc-prison',     units:['minutes','heures','jours','mois','ans'] },
+  { v:'garde',      e:'🟠', label:'Garde à vue',          cls:'sc-garde',      units:['minutes','heures','jours'] },
+  { v:'suspension', e:'🟣', label:'Suspension de permis', cls:'sc-suspension', units:['jours','semaines','mois','ans'] },
+  { v:'permis',     e:'🟢', label:'Annulation permis',    cls:'sc-permis',     units:['mois','ans'] },
+  { v:'autre',      e:'⚪', label:'Autre sanction',       cls:'sc-autre',      units:[] },
+];
+
+const STORE = 'codepenal_v6';
+const PWD   = '100686';
+
+let articles = [], editId = null, delId = null, activeFilter = 'all', unlocked = false, pending = null;
+
+const q   = id => document.getElementById(id);
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2);
+const esc = s  => s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const has = (a, t) => (a.sanctions||[]).some(s => s.type === t);
+
+/* ════════ STORAGE ════════ */
+function load() {
+  try { articles = JSON.parse(localStorage.getItem(STORE) || '[]'); } catch { articles = []; }
+  if (!articles.length) { articles = defaults(); }
+  save();
+}
+function save() { localStorage.setItem(STORE, JSON.stringify(articles)); render(); }
+
+/* ════════ RENDER ════════ */
+function render() {
+  updateStats();
+  updateFilters();
+  renderList();
+}
+
+function updateStats() {
+  const n = articles.length;
+  const pris = articles.filter(a => has(a,'prison')).length;
+  const gard = articles.filter(a => has(a,'garde')).length;
+  const pts  = articles.filter(a => has(a,'points')).length;
+  const susp = articles.filter(a => has(a,'suspension') || has(a,'permis')).length;
+  q('sTotal').textContent  = n;
+  q('sPrison').textContent = pris;
+  q('sGarde').textContent  = gard;
+  q('sPoints').textContent = pts;
+  q('sSusp').textContent   = susp;
+  const pct = x => n ? Math.round(x/n*100)+'%' : '0%';
+  q('bPrison').style.width = pct(pris);
+  q('bGarde').style.width  = pct(gard);
+  q('bPoints').style.width = pct(pts);
+  q('bSusp').style.width   = pct(susp);
+}
+
+function updateFilters() {
+  const cats = [...new Set(articles.map(a => a.cat).filter(Boolean))].sort();
+  const ul = q('catList');
+  ul.innerHTML = '';
+  ul.appendChild(mkCatBtn('Tous', 'all', articles.length, activeFilter === 'all'));
+  cats.forEach(c => {
+    const cnt = articles.filter(a => a.cat === c).length;
+    ul.appendChild(mkCatBtn(c, c, cnt, activeFilter === c));
+  });
+  q('catDatalist').innerHTML = cats.map(c => `<option value="${esc(c)}">`).join('');
+}
+
+function mkCatBtn(label, val, cnt, active) {
+  const b = document.createElement('button');
+  b.className = 'cat-btn' + (active ? ' active' : '');
+  b.innerHTML = `<span>${esc(label)}</span><span class="cat-count">${cnt}</span>`;
+  b.addEventListener('click', () => { activeFilter = val; updateFilters(); renderList(); });
+  return b;
+}
+
+function renderList() {
+  const q2 = q('searchInput').value.toLowerCase().trim();
+  const list = q('articlesList');
+  const filtered = articles.filter(a => {
+    if (activeFilter !== 'all' && a.cat !== activeFilter) return false;
+    if (!q2) return true;
+    return (a.num + a.titre + (a.cat||'') + (a.desc||'')).toLowerCase().includes(q2);
+  });
+  q('contentCount').textContent = `${filtered.length} article${filtered.length !== 1 ? 's' : ''}`;
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">📄</div>
+      <div class="empty-title">${articles.length === 0 ? 'Aucun article' : 'Aucun résultat'}</div>
+      <p class="empty-sub">${articles.length === 0 ? 'Créez votre premier article.' : 'Essayez un autre filtre ou une autre recherche.'}</p>
+    </div>`;
+    return;
+  }
+  list.innerHTML = filtered.map((a, i) => buildCard(a, i)).join('');
+}
+
+function buildCard(a, i) {
+  const sancs = (a.sanctions || []).map(s => {
+    const def = SANCTIONS_CFG.find(d => d.v === s.type);
+    if (!def) return '';
+    const text = s.type === 'autre'
+      ? esc(s.valeur || '—')
+      : `${esc(def.label)} · <strong>${s.valeur} ${esc(s.unite)}</strong>`;
+    return `<span class="s-chip ${def.cls}"><span class="s-chip-dot"></span>${text}</span>`;
+  }).join('');
+  return `
+  <div class="a-card" style="animation-delay:${Math.min(i * 0.04, 0.5)}s">
+    <div class="a-card-inner">
+      <div class="a-num-col">
+        <div class="a-num-dot"></div>
+        <div class="a-num-text">${esc(a.num)}</div>
+      </div>
+      <div class="a-body">
+        <div class="a-header">
+          <div class="a-meta">
+            ${a.cat ? `<span class="a-cat-pill">${esc(a.cat)}</span>` : ''}
+          </div>
+          <div class="a-actions">
+            <button class="btn-icon" onclick="requirePwd({type:'edit',id:'${a.id}'})" title="Modifier">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 1.5l2.5 2.5-6 6H2v-2.5l6-6z"/></svg>
+            </button>
+            <button class="btn-icon danger" onclick="requirePwd({type:'delete',id:'${a.id}'})" title="Supprimer">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 3h8M5 3V2h2v1M4 3v7h4V3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="a-title">${esc(a.titre)}</div>
+        ${a.desc ? `<div class="a-desc">${esc(a.desc)}</div>` : ''}
+        ${sancs ? `<div class="a-sanctions">${sancs}</div>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ════════ PASSWORD ════════ */
+function requirePwd(action) {
+  if (unlocked) { doAction(action); return; }
+  pending = action;
+  q('pwdInput').value = '';
+  q('pwdErr').textContent = '';
+  q('pwdInput').type = 'password';
+  q('pwdEye').textContent = '👁';
+  q('pwdOverlay').style.display = 'flex';
+  setTimeout(() => q('pwdInput').focus(), 80);
+}
+function checkPwd() {
+  if (q('pwdInput').value === PWD) {
+    unlocked = true;
+    q('pwdOverlay').style.display = 'none';
+    q('lockBadge').classList.add('unlocked');
+    q('lockLabel').textContent = 'Admin actif';
+    if (pending) { const a = pending; pending = null; doAction(a); }
+  } else {
+    const inp = q('pwdInput');
+    inp.classList.add('error');
+    q('pwdErr').textContent = 'Mot de passe incorrect.';
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 500);
+  }
+}
+function doAction(a) {
+  if (a.type === 'add')    openModal();
+  if (a.type === 'edit')   openModal(a.id);
+  if (a.type === 'delete') askDelete(a.id);
+}
+function closePwd() { q('pwdOverlay').style.display = 'none'; pending = null; }
+function togglePwd() {
+  const i = q('pwdInput'), e = q('pwdEye');
+  i.type = i.type === 'password' ? 'text' : 'password';
+  e.textContent = i.type === 'password' ? '👁' : '🙈';
+}
+
+/* ════════ MODAL ════════ */
+function openModal(id = null) {
+  editId = id;
+  q('sBuilder').innerHTML = '';
+  if (id) {
+    const a = articles.find(x => x.id === id);
+    q('modalEye').textContent = 'Modification';
+    q('modalTitle').textContent = "Modifier l'article";
+    q('fNum').value   = a.num;
+    q('fCat').value   = a.cat || '';
+    q('fTitre').value = a.titre;
+    q('fDesc').value  = a.desc || '';
+    (a.sanctions || []).forEach(s => addSRow(s));
+  } else {
+    q('modalEye').textContent = 'Création';
+    q('modalTitle').textContent = 'Nouvel Article';
+    ['fNum','fCat','fTitre','fDesc'].forEach(id => q(id).value = '');
+  }
+  q('editOverlay').style.display = 'flex';
+}
+function closeModal() { q('editOverlay').style.display = 'none'; editId = null; }
+
+function addSRow(s = null) {
+  const builder = q('sBuilder');
+  const row = document.createElement('div');
+  const type = s ? s.type : 'points';
+  row.className = 's-row' + (type === 'autre' ? ' mode-autre' : '');
+
+  const sel = document.createElement('select');
+  sel.className = 's-select';
+  SANCTIONS_CFG.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.v; opt.textContent = `${d.e} ${d.label}`;
+    if (d.v === type) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  sel.onchange = () => rebuildRow(row, sel.value);
+  row.appendChild(sel);
+
+  appendValFields(row, type, s ? s.valeur : '', s ? s.unite : '');
+
+  const rm = document.createElement('button');
+  rm.type = 'button'; rm.className = 's-rm'; rm.innerHTML = '✕';
+  rm.onclick = () => row.remove();
+  row.appendChild(rm);
+  builder.appendChild(row);
+}
+
+function appendValFields(row, type, val = '', unite = '') {
+  const def = SANCTIONS_CFG.find(d => d.v === type);
+  const rm = row.querySelector('.s-rm');
+  if (type === 'autre') {
+    const inp = document.createElement('input');
+    inp.type = 'text'; inp.className = 's-val';
+    inp.placeholder = 'Précisez la sanction…';
+    inp.value = val || '';
+    row.insertBefore(inp, rm);
+  } else {
+    const inp = document.createElement('input');
+    inp.type = 'number'; inp.className = 's-val';
+    inp.min = '1'; inp.placeholder = '—'; inp.value = val || '';
+    row.insertBefore(inp, rm);
+    const su = document.createElement('select');
+    su.className = 's-unite';
+    (def ? def.units : []).forEach(u => {
+      const o = document.createElement('option');
+      o.value = u; o.textContent = u;
+      if (u === unite) o.selected = true;
+      su.appendChild(o);
+    });
+    row.insertBefore(su, rm);
+  }
+}
+
+function rebuildRow(row, newType) {
+  row.querySelectorAll('.s-val,.s-unite').forEach(el => el.remove());
+  row.className = 's-row' + (newType === 'autre' ? ' mode-autre' : '');
+  appendValFields(row, newType, '', '');
+}
+
+function saveArticle() {
+  const num   = q('fNum').value.trim();
+  const titre = q('fTitre').value.trim();
+  if (!num)   { flash('fNum'); return; }
+  if (!titre) { flash('fTitre'); return; }
+  const sanctions = [];
+  q('sBuilder').querySelectorAll('.s-row').forEach(row => {
+    const type   = row.querySelector('.s-select').value;
+    const valEl  = row.querySelector('.s-val');
+    const unitEl = row.querySelector('.s-unite');
+    const valeur = valEl ? valEl.value.trim() : '';
+    const unite  = unitEl ? unitEl.value : '';
+    if (valeur) sanctions.push({ type, valeur, unite });
+  });
+  const data = { num, cat: q('fCat').value.trim(), titre, desc: q('fDesc').value.trim(), sanctions };
+  if (editId) {
+    const idx = articles.findIndex(a => a.id === editId);
+    articles[idx] = { ...articles[idx], ...data };
+  } else {
+    articles.push({ id: uid(), ...data });
+  }
+  save(); closeModal();
+}
+
+function flash(id) {
+  const el = q(id);
+  el.classList.add('f-error');
+  el.focus();
+  setTimeout(() => el.classList.remove('f-error'), 1500);
+}
+
+/* ════════ DELETE ════════ */
+function askDelete(id) { delId = id; q('confirmOverlay').style.display = 'flex'; }
+function cancelDelete() { delId = null; q('confirmOverlay').style.display = 'none'; }
+function confirmDelete() {
+  articles = articles.filter(a => a.id !== delId);
+  delId = null;
+  q('confirmOverlay').style.display = 'none';
+  save();
+}
+
+/* ════════ KEYBOARD ════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); cancelDelete(); closePwd(); }
+  if (e.key === 'Enter' && q('pwdOverlay').style.display === 'flex') checkPwd();
+});
+q('searchInput').addEventListener('input', renderList);
+
+/* ════════ DEFAULTS ════════ */
+function defaults() {
+  return [
+    {
+      id: uid(), num: '100-1', cat: 'Infractions routières',
+      titre: 'Conduite sous l\'emprise de stupéfiants',
+      desc: 'Toute personne surprise au volant sous influence avérée de produits stupéfiants.',
+      sanctions: [
+        { type: 'points', valeur: '6', unite: 'points' },
+        { type: 'garde', valeur: '24', unite: 'heures' },
+        { type: 'suspension', valeur: '3', unite: 'mois' },
+      ],
+    },
+    {
+      id: uid(), num: '100-2', cat: 'Infractions routières',
+      titre: 'Grand excès de vitesse (+50 km/h)',
+      desc: 'Dépassement de la vitesse maximale autorisée de plus de 50 km/h constaté par un agent ou radar.',
+      sanctions: [
+        { type: 'points', valeur: '6', unite: 'points' },
+        { type: 'suspension', valeur: '6', unite: 'mois' },
+      ],
+    },
+    {
+      id: uid(), num: '100-3', cat: 'Infractions routières',
+      titre: 'Refus d\'obtempérer à une sommation',
+      desc: 'Le fait de ne pas s\'arrêter lors d\'une injonction d\'un agent de police en exercice.',
+      sanctions: [
+        { type: 'prison', valeur: '2', unite: 'mois' },
+        { type: 'points', valeur: '4', unite: 'points' },
+        { type: 'suspension', valeur: '1', unite: 'mois' },
+      ],
+    },
+    {
+      id: uid(), num: '100-4', cat: 'Infractions routières',
+      titre: 'Conduite en état d\'ivresse manifeste',
+      desc: 'Conduite d\'un véhicule avec un taux d\'alcoolémie dépassant le seuil légal.',
+      sanctions: [
+        { type: 'points', valeur: '6', unite: 'points' },
+        { type: 'garde', valeur: '12', unite: 'heures' },
+        { type: 'suspension', valeur: '2', unite: 'mois' },
+      ],
+    },
+    {
+      id: uid(), num: '200-1', cat: 'Atteintes aux personnes',
+      titre: 'Coups et blessures volontaires',
+      desc: 'Violences physiques intentionnelles ayant entraîné une incapacité de travail.',
+      sanctions: [
+        { type: 'prison', valeur: '6', unite: 'mois' },
+        { type: 'garde', valeur: '48', unite: 'heures' },
+      ],
+    },
+    {
+      id: uid(), num: '200-2', cat: 'Atteintes aux personnes',
+      titre: 'Menaces et intimidations',
+      desc: 'Propos ou comportements destinés à inspirer de la crainte à une ou plusieurs personnes.',
+      sanctions: [
+        { type: 'prison', valeur: '1', unite: 'mois' },
+        { type: 'garde', valeur: '24', unite: 'heures' },
+      ],
+    },
+    {
+      id: uid(), num: '200-3', cat: 'Atteintes aux personnes',
+      titre: 'Séquestration illégale',
+      desc: 'Le fait de retenir une personne contre sa volonté en dehors des procédures légales.',
+      sanctions: [
+        { type: 'prison', valeur: '12', unite: 'mois' },
+        { type: 'garde', valeur: '72', unite: 'heures' },
+      ],
+    },
+    {
+      id: uid(), num: '300-1', cat: 'Crimes graves',
+      titre: 'Homicide volontaire',
+      desc: 'Le fait de donner intentionnellement la mort à autrui constitue un meurtre au premier degré.',
+      sanctions: [
+        { type: 'prison', valeur: '30', unite: 'ans' },
+        { type: 'permis', valeur: '5', unite: 'ans' },
+      ],
+    },
+    {
+      id: uid(), num: '300-2', cat: 'Crimes graves',
+      titre: 'Tentative de meurtre',
+      desc: 'Acte délibéré tendant à ôter la vie à autrui, sans résultat mortel.',
+      sanctions: [
+        { type: 'prison', valeur: '15', unite: 'ans' },
+        { type: 'garde', valeur: '96', unite: 'heures' },
+      ],
+    },
+    {
+      id: uid(), num: '400-1', cat: 'Infractions contre les biens',
+      titre: 'Vol simple',
+      desc: 'Soustraction frauduleuse de la chose d\'autrui sans violence ni effraction.',
+      sanctions: [
+        { type: 'prison', valeur: '3', unite: 'mois' },
+        { type: 'garde', valeur: '24', unite: 'heures' },
+      ],
+    },
+    {
+      id: uid(), num: '400-2', cat: 'Infractions contre les biens',
+      titre: 'Vol avec violence ou arme',
+      desc: 'Vol commis avec usage ou menace d\'une arme, ou par recours à la violence physique.',
+      sanctions: [
+        { type: 'prison', valeur: '12', unite: 'mois' },
+        { type: 'garde', valeur: '72', unite: 'heures' },
+      ],
+    },
+    {
+      id: uid(), num: '400-3', cat: 'Infractions contre les biens',
+      titre: 'Destruction de biens publics',
+      desc: 'Dégradation volontaire de propriétés appartenant à l\'État ou aux institutions.',
+      sanctions: [
+        { type: 'prison', valeur: '2', unite: 'mois' },
+        { type: 'autre', valeur: 'Réparation des dommages', unite: '' },
+      ],
+    },
+    {
+      id: uid(), num: '500-1', cat: 'Corruption & abus de pouvoir',
+      titre: 'Corruption active d\'agent public',
+      desc: 'Offrir ou promettre un avantage indu à un agent de l\'État pour influencer ses actes.',
+      sanctions: [
+        { type: 'prison', valeur: '24', unite: 'mois' },
+        { type: 'autre', valeur: 'Révocation des droits civiques', unite: '' },
+      ],
+    },
+    {
+      id: uid(), num: '500-2', cat: 'Corruption & abus de pouvoir',
+      titre: 'Abus d\'autorité en service',
+      desc: 'Usage excessif ou illégitime de l\'autorité conférée par la fonction.',
+      sanctions: [
+        { type: 'prison', valeur: '6', unite: 'mois' },
+        { type: 'suspension', valeur: '3', unite: 'mois' },
+      ],
+    },
+    {
+      id: uid(), num: '600-1', cat: 'Stupéfiants',
+      titre: 'Trafic de stupéfiants',
+      desc: 'Production, transport, vente ou distribution de substances illicites classées.',
+      sanctions: [
+        { type: 'prison', valeur: '36', unite: 'mois' },
+        { type: 'garde', valeur: '96', unite: 'heures' },
+        { type: 'autre', valeur: 'Confiscation des biens', unite: '' },
+      ],
+    },
+    {
+      id: uid(), num: '600-2', cat: 'Stupéfiants',
+      titre: 'Consommation de stupéfiants',
+      desc: 'Usage personnel de substances psychoactives illicites constaté par agent.',
+      sanctions: [
+        { type: 'garde', valeur: '12', unite: 'heures' },
+        { type: 'autre', valeur: 'Stage de sensibilisation obligatoire', unite: '' },
+      ],
+    },
+  ];
+}
+
+load();
+</script>
 </body>
 </html>
