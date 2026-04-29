@@ -1059,11 +1059,6 @@ body {
       <div class="hstat-bar"><div class="hstat-fill" id="bSusp" style="width:0%"></div></div>
       <div class="hstat-label">Suspension</div>
     </div>
-     <div class="hstat">
-      <div class="hstat-num" id="sSusp">0 €</div>
-      <div class="hstat-bar"><div class="hstat-fill" id="bSusp" style="width:0%"></div></div>
-      <div class="hstat-label">amende</div>
-    </div>
   </div>
 </div>
 
@@ -1194,7 +1189,9 @@ const SANCTIONS_CFG = [
   { v:'garde',      e:'🟠', label:'Garde à vue',          cls:'sc-garde',      units:['minutes','heures','jours'] },
   { v:'suspension', e:'🟣', label:'Suspension de permis', cls:'sc-suspension', units:['jours','semaines','mois','ans'] },
   { v:'permis',     e:'🟢', label:'Annulation permis',    cls:'sc-permis',     units:['mois','ans'] },
+  { v:'amende',     e:'🟡', label:'Montant de l amende',    cls:'sc-amende',     units:['montant'] },
   { v:'autre',      e:'⚪', label:'Autre sanction',       cls:'sc-autre',      units:[] },
+   
 ];
 
 const STORE = 'codepenal_v6';
