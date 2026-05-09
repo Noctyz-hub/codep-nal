@@ -87,7 +87,7 @@ const ARTICLES = [
     desc: 'Le fait de ne pas s\'arrêter lors d\'une injonction d\'un agent de police en exercice.',
     sanctions: [
       { type: 'points',     valeur: '4', unite: 'points' },
-      { type: 'suspension permis', valeur: '15', unite: 'minutes'   },
+      { type: 'suspension', valeur: '15', unite: 'minutes'   },
       { type: 'prison',     valeur: '10', unite: 'minutes'   },
     ],
   },
