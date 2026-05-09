@@ -72,7 +72,7 @@ const ARTICLES = [
     num: '100-4',
     cat: 'Infractions routières',
     titre: 'Grand excès de vitesse (+50 km/h)',
-    desc: 'Dépassement de la vitesse maximale autorisée de plus de 20 km/h constaté par un agent ou radar.',
+    desc: 'Dépassement de la vitesse maximale autorisée de plus de 50 km/h constaté par un agent ou radar.',
     sanctions: [
       { type: 'amende',     valeur: '750', unite: '€'    },
       { type: 'points',     valeur: '4',   unite: 'points'},
@@ -101,6 +101,28 @@ const ARTICLES = [
       { type: 'garde',      valeur: '5', unite: 'minutes' },
       { type: 'amende',     valeur: '500', unite: '€'     },
       { type: 'suspension', valeur: '8',  unite: 'minutes'   },
+    ],
+  },
+ {
+    num: '100-7',
+    cat: 'Infractions routières',
+    titre: 'Griller un feu rouge.',
+    desc: 'Seulement si le conduteur grille un feu rouge.',
+    sanctions: [
+      { type: 'points',     valeur: '2',  unite: 'points' },
+      { type: 'amende',     valeur: '135', unite: '€'     },
+      
+    ],
+  },
+  {
+    num: '100-8',
+    cat: 'Infractions routières',
+    titre: 'Griller un stop.',
+    desc: 'Seulement si le conduteur grille un stop.',
+    sanctions: [
+      { type: 'points',     valeur: '2',  unite: 'points' },
+      { type: 'amende',     valeur: '135', unite: '€'     },
+      
     ],
   },
 
