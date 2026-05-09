@@ -166,6 +166,56 @@ const ARTICLES = [
       { type: 'points', valeur: '2', unite: 'points' },
     ],
   },
+{
+  num: '100-13',
+  cat: 'Infractions routières',
+  titre: 'Franchissement de ligne continue',
+  desc: 'Le conducteur franchit ou chevauche une ligne continue sans autorisation.',
+  sanctions: [
+    { type: 'amende', valeur: '135', unite: '€' },
+    { type: 'points', valeur: '1', unite: 'points' },
+  ],
+},
+
+{
+  num: '100-14',
+  cat: 'Infractions routières',
+  titre: 'Plaque d’immatriculation non conforme ou défaut de carte grise.',
+  desc: 'Plaque absente, illisible, non réglementaire ou défaut de carte grise.',
+  sanctions: [
+    { type: 'amende', valeur: '135', unite: '€' },
+  ],
+},
+{
+  num: '100-15',
+  cat: 'Infractions routières',
+  titre: 'Conduite avec permis suspendu',
+  desc: 'Le conducteur utilise un véhicule malgré une suspension de permis.',
+  sanctions: [
+    { type: 'amende', valeur: '750', unite: '€' },
+    { type: 'garde', valeur: '10', unite: 'minutes' },
+  ],
+},
+{
+  num: '100-17',
+  cat: 'Infractions routières',
+  titre: 'Refus de contrôle',
+  desc: 'Refus de présenter les documents du véhicule ou du conducteur.',
+  sanctions: [
+    { type: 'amende', valeur: '150', unite: '€' },
+    { type: 'points', valeur: '1', unite: 'points' },
+  ],
+},
+{
+  num: '100-19',
+  cat: 'Infractions routières',
+  titre: 'Conduite agressive',
+  desc: 'Comportement dangereux ou intimidant envers les autres usagers.',
+  sanctions: [
+    { type: 'amende', valeur: '300', unite: '€' },
+    { type: 'points', valeur: '2', unite: 'points' },
+  ],
+},
   /* ──────────────────────────────────
      CATÉGORIE : Atteintes aux personnes
   ────────────────────────────────── */
