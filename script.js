@@ -106,7 +106,7 @@ const ARTICLES = [
  {
     num: '100-7',
     cat: 'Infractions routières',
-    titre: 'Griller un feu rouge.',
+    titre: 'Non-respect d’un feu rouge.',
     desc: 'Seulement si le conduteur grille un feu rouge.',
     sanctions: [
       { type: 'points',     valeur: '2',  unite: 'points' },
@@ -125,7 +125,47 @@ const ARTICLES = [
       
     ],
   },
+  {
+    num: '100-9',
+    cat: 'Infractions routières',
+    titre: 'Stationnement genant.',
+    desc: 'Seulement si la voiture gêne le passage.',
+    sanctions: [
+      { type: 'amende',     valeur: '35', unite: '€'     },
+      
+    ],
+  },
+  {
+    num: '100-10',
+    cat: 'Infractions routières',
+    titre: 'Stationnement genant dangereux.',
+    desc: 'Seulement si la voiture gêne le passage dangereusement.',
+    sanctions: [
+      { type: 'amende',     valeur: '135', unite: '€'     },
+      
+    ],
+  },
+  {
+    num: '100-11',
+    cat: 'Infractions routières',
+    titre: 'Refus de priorité',
+    desc: 'Le conducteur ne respecte pas la priorité et gêne ou met en danger les autres usagers.',
+    sanctions: [
+      { type: 'amende', valeur: '135', unite: '€' },
+      { type: 'points', valeur: '1', unite: 'points' },
+    ],
+  },
 
+  {
+    num: '100-12',
+    cat: 'Infractions routières',
+    titre: 'Téléphone au volant',
+    desc: 'Utilisation d’un téléphone tenu en main pendant la conduite.',
+    sanctions: [
+      { type: 'amende', valeur: '135', unite: '€' },
+      { type: 'points', valeur: '2', unite: 'points' },
+    ],
+  },
   /* ──────────────────────────────────
      CATÉGORIE : Atteintes aux personnes
   ────────────────────────────────── */
