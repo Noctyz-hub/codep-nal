@@ -81,26 +81,26 @@ const ARTICLES = [
   },
    
   {
-    num: '100-3',
+    num: '100-5',
     cat: 'Infractions routières',
     titre: 'Refus d\'obtempérer à une sommation',
     desc: 'Le fait de ne pas s\'arrêter lors d\'une injonction d\'un agent de police en exercice.',
     sanctions: [
-      { type: 'prison',     valeur: '2', unite: 'mois'   },
       { type: 'points',     valeur: '4', unite: 'points' },
-      { type: 'suspension', valeur: '1', unite: 'mois'   },
+      { type: 'suspension permis', valeur: '15', unite: 'minutes'   },
+      { type: 'prison',     valeur: '10', unite: 'minutes'   },
     ],
   },
   {
-    num: '100-4',
+    num: '100-6',
     cat: 'Infractions routières',
     titre: 'Conduite en état d\'ivresse manifeste',
     desc: 'Conduite d\'un véhicule avec un taux d\'alcoolémie dépassant le seuil légal.',
     sanctions: [
-      { type: 'points',     valeur: '6',  unite: 'points' },
-      { type: 'garde',      valeur: '12', unite: 'heures' },
+      { type: 'points',     valeur: '2',  unite: 'points' },
+      { type: 'garde',      valeur: '5', unite: 'minutes' },
       { type: 'amende',     valeur: '500', unite: '€'     },
-      { type: 'suspension', valeur: '2',  unite: 'mois'   },
+      { type: 'suspension', valeur: '8',  unite: 'minutes'   },
     ],
   },
 
