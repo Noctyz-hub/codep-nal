@@ -42,22 +42,44 @@ const ARTICLES = [
     titre: 'Conduite sous l\'emprise de stupéfiants',
     desc: 'Toute personne surprise au volant sous influence avérée de produits stupéfiants.',
     sanctions: [
-      { type: 'points',     valeur: '6',  unite: 'points' },
-      { type: 'garde',      valeur: '24', unite: 'heures' },
-      { type: 'suspension', valeur: '3',  unite: 'mois'   },
+      { type: 'points',     valeur: '3',  unite: 'points' },
+      { type: 'garde',      valeur: '5', unite: 'minutes' },
+      
     ],
   },
   {
     num: '100-2',
     cat: 'Infractions routières',
-    titre: 'Grand excès de vitesse (+50 km/h)',
-    desc: 'Dépassement de la vitesse maximale autorisée de plus de 50 km/h constaté par un agent ou radar.',
+    titre: 'Grand excès de vitesse (+7 km/h)',
+    desc: 'Dépassement de la vitesse maximale autorisée de plus de 7 km/h constaté par un agent ou radar.',
     sanctions: [
-      { type: 'points',     valeur: '6', unite: 'points' },
-      { type: 'amende',     valeur: '750', unite: '€'    },
-      { type: 'suspension', valeur: '6', unite: 'mois'   },
+      { type: 'amende',     valeur: '68', unite: '€'    },
+      
     ],
   },
+ {
+    num: '100-3',
+    cat: 'Infractions routières',
+    titre: 'Grand excès de vitesse (+20 km/h)',
+    desc: 'Dépassement de la vitesse maximale autorisée de plus de 20 km/h constaté par un agent ou radar.',
+    sanctions: [
+      { type: 'amende',     valeur: '135', unite: '€'    },
+      { type: 'points',     valeur: '2',   unite: 'points'},
+      
+    ],
+  },
+ {
+    num: '100-4',
+    cat: 'Infractions routières',
+    titre: 'Grand excès de vitesse (+50 km/h)',
+    desc: 'Dépassement de la vitesse maximale autorisée de plus de 20 km/h constaté par un agent ou radar.',
+    sanctions: [
+      { type: 'amende',     valeur: '750', unite: '€'    },
+      { type: 'points',     valeur: '4',   unite: 'points'},
+      
+    ],
+  },
+   
   {
     num: '100-3',
     cat: 'Infractions routières',
