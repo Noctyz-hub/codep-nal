@@ -17,6 +17,9 @@
        { type: 'suspension', valeur: '3',  unite: 'mois'     },
        { type: 'permis',     valeur: '1',  unite: 'ans'      },
        { type: 'amende',     valeur: '500',unite: '€'        },
+       { type: 'b1',         valeur: 'Inscription', unite: 'casier' },
+       { type: 'b2',         valeur: 'Inscription', unite: 'casier' },
+       { type: 'b3',         valeur: 'Inscription', unite: 'casier' },
        { type: 'autre',      valeur: 'Texte libre', unite: '' },
      ]
    }
@@ -28,6 +31,9 @@
      suspension  → Suspension de permis (unite: jours / semaines / mois / ans)
      permis      → Annulation de permis (unite: mois / ans)
      amende      → Amende (unite: "€")
+     b1          → Inscription casier judiciaire B1
+     b2          → Inscription casier judiciaire B2
+     b3          → Inscription casier judiciaire B3
      autre       → Sanction libre (valeur = texte descriptif)
 ════════════════════════════════════════════════════════════ */
 
@@ -44,7 +50,7 @@ const ARTICLES = [
     sanctions: [
       { type: 'points', valeur: '3',  unite: 'points'  },
       { type: 'garde',  valeur: '5',  unite: 'minutes' },
-      { type: 'b2', valeur: 'Inscription', unite: 'casier' },
+      { type: 'b2',     valeur: 'Inscription', unite: 'casier' },
     ],
   },
   {
@@ -479,6 +485,11 @@ function buildCard(a, i) {
     let text;
     if (s.type === 'autre') {
       text = esc(s.valeur || '—');
+    } else if (['b1', 'b2', 'b3'].includes(s.type)) {
+      /* Pour les casiers : "Casier B2 · Inscription casier" ou juste le label si valeur vide */
+      text = s.valeur
+        ? `${def.label} · <strong>${esc(s.valeur)}</strong>`
+        : def.label;
     } else {
       text = `${def.label} · <strong>${esc(s.valeur)} ${esc(s.unite)}</strong>`;
     }
