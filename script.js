@@ -44,7 +44,7 @@ const ARTICLES = [
     sanctions: [
       { type: 'points', valeur: '3',  unite: 'points'  },
       { type: 'garde',  valeur: '5',  unite: 'minutes' },
-      { type: 'b1', valeur: 'Inscription', unite: 'casier' },
+      { type: 'b2', valeur: 'Inscription', unite: 'casier' },
     ],
   },
   {
