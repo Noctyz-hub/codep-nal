@@ -377,6 +377,12 @@ const SANCTIONS_CFG = [
   { v: 'suspension', label: 'Suspension de permis', cls: 'sc-suspension' },
   { v: 'permis',     label: 'Annulation permis',    cls: 'sc-permis'     },
   { v: 'amende',     label: 'Amende',               cls: 'sc-amende'     },
+
+  /* ── CASIERS ── */
+  { v: 'b1',         label: 'Casier B1',            cls: 'sc-b1'         },
+  { v: 'b2',         label: 'Casier B2',            cls: 'sc-b2'         },
+  { v: 'b3',         label: 'Casier B3',            cls: 'sc-b3'         },
+
   { v: 'autre',      label: '',                     cls: 'sc-autre'      },
 ];
 
