@@ -256,8 +256,10 @@ const ARTICLES = [
     titre: 'Homicide volontaire',
     desc: 'Le fait de donner intentionnellement la mort à autrui constitue un meurtre au premier degré.',
     sanctions: [
-      { type: 'prison', valeur: '30', unite: 'ans' },
-      { type: 'permis', valeur: '5',  unite: 'ans' },
+      { type: 'prison', valeur: '30', unite: 'minutes' },
+      { type: 'garde',  valeur: '15', unite: 'minutes' },
+      { type: 'b3',     valeur: 'Inscription', unite: 'casier' },
+      
     ],
   },
   {
@@ -266,10 +268,68 @@ const ARTICLES = [
     titre: 'Tentative de meurtre',
     desc: 'Acte délibéré tendant à ôter la vie à autrui, sans résultat mortel.',
     sanctions: [
-      { type: 'prison', valeur: '15', unite: 'ans'    },
-      { type: 'garde',  valeur: '96', unite: 'heures' },
+      { type: 'prison', valeur: '15', unite: 'minutes'    },
+      { type: 'garde',  valeur: '10', unite: 'minutes' },
+      { type: 'b2',     valeur: 'Inscription', unite: 'casier' },
     ],
   },
+
+  {
+    num: '300-3',
+    cat: 'Crimes graves',
+    titre: 'Homicide involontaire',
+    desc: 'Le fait de causer la mort d’une personne sans intention de la donner, par maladresse, imprudence, négligence ou non-respect des règles de sécurité.',
+    sanctions: [
+        { type: 'prison', valeur: '25', unite: 'minutes' },
+        { type: 'garde',  valeur: '15', unite: 'minutes' },
+        { type: 'b3',     valeur: 'Inscription', unite: 'casier' },
+    ],
+},
+
+   {
+    num: '300-4',
+    cat: 'Crimes graves',
+    titre: 'Prise d’otage',
+    desc: 'Le fait de retenir une personne contre sa volonté afin d’obtenir un avantage, une rançon ou une négociation.',
+    sanctions: [
+        { type: 'prison', valeur: '35', unite: 'minutes' },
+        { type: 'garde',  valeur: '20', unite: 'minutes' },
+        { type: 'b3',     valeur: 'Inscription', unite: 'casier' },
+    ],
+},
+
+   {
+    num: '300-5',
+    cat: 'Crimes graves',
+    titre: 'Trafic d’armes',
+    desc: 'Le fait de vendre, transporter ou distribuer illégalement des armes.',
+    sanctions: [
+        { type: 'prison', valeur: '30', unite: 'minutes' },
+        { type: 'garde',  valeur: '20', unite: 'minutes' },
+        { type: 'b3',     valeur: 'Inscription', unite: 'casier' },
+    ],
+},
+   {
+    num: '300-6',
+    cat: 'Crimes graves',
+    titre: 'Association criminelle',
+    desc: 'Le fait de participer à une organisation ou un groupe ayant pour objectif de commettre des crimes.',
+    sanctions: [
+        { type: 'prison', valeur: '25', unite: 'minutes' },
+        { type: 'garde',  valeur: '15', unite: 'minutes' },
+        { type: 'b3',     valeur: 'Inscription', unite: 'casier' },
+    ],
+},
+   {
+    num: '300-7',
+    cat: 'Crimes graves',
+    titre: 'Évasion de prison',
+    desc: 'Le fait de quitter illégalement un établissement pénitentiaire ou une garde à vue.',
+    sanctions: [
+        { type: 'prison', valeur: '30', unite: 'minutes' },
+        { type: 'b3',     valeur: 'Inscription', unite: 'casier' },
+    ],
+},
 
   /* ──────────────────────────────────
      CATÉGORIE : Infractions contre les biens
