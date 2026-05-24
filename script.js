@@ -213,6 +213,40 @@ const ARTICLES = [
     ],
   },
 
+   {
+  num: '100-19',
+  cat: 'Infractions routières',
+  titre: 'Conduite sans permis',
+  desc: 'Le conducteur ne possède aucun permis valide.',
+  sanctions: [
+    { type: 'amende', valeur: '800', unite: '€' },
+    { type: 'garde', valeur: '15', unite: 'minutes' },
+    { type: 'b2', valeur: 'Inscription', unite: 'casier' },
+  ],
+},
+{
+  num: '100-20',
+  cat: 'Infractions routières',
+  titre: 'Délit de fuite',
+  desc: 'Quitter les lieux après un accident sans assumer ses responsabilités.',
+  sanctions: [
+    { type: 'prison', valeur: '15', unite: 'minutes' },
+    { type: 'garde', valeur: '10', unite: 'minutes' },
+    { type: 'points', valeur: '6', unite: 'points' },
+  ],
+},
+{
+  num: '100-21',
+  cat: 'Infractions routières',
+  titre: 'Rodéo urbain',
+  desc: 'Conduite dangereuse ou acrobatique sur voie publique.',
+  sanctions: [
+    { type: 'amende', valeur: '1000', unite: '€' },
+    { type: 'suspension', valeur: '1', unite: 'mois' },
+    { type: 'garde', valeur: '20', unite: 'minutes' },
+  ],
+},
+
   /* ──────────────────────────────────
      CATÉGORIE : Atteintes aux personnes
   ────────────────────────────────── */
@@ -415,6 +449,67 @@ const ARTICLES = [
     ],
   },
 
+  /* ──────────────────────────────────
+     CATÉGORIE : Atteintes aux forces de l’ordre
+  ────────────────────────────────── */
+   
+{
+  num: '700-1',
+  cat: 'Atteintes aux forces de l’ordre',
+  titre: 'Outrage à agent',
+  desc: 'Insulte ou manque de respect envers un agent en service.',
+  sanctions: [
+    { type: 'amende', valeur: '250', unite: '€' },
+    { type: 'garde', valeur: '10', unite: 'minutes' },
+  ],
+},
+{
+  num: '700-2',
+  cat: 'Atteintes aux forces de l’ordre',
+  titre: 'Rébellion',
+  desc: 'Opposition violente à une interpellation légale.',
+  sanctions: [
+    { type: 'prison', valeur: '10', unite: 'minutes' },
+    { type: 'garde', valeur: '15', unite: 'minutes' },
+  ],
+},
+{
+  num: '700-3',
+  cat: 'Atteintes aux forces de l’ordre',
+  titre: 'Usurpation de fonction',
+  desc: 'Se faire passer pour un agent des forces de l’ordre.',
+  sanctions: [
+    { type: 'prison', valeur: '20', unite: 'minutes' },
+    { type: 'b2', valeur: 'Inscription', unite: 'casier' },
+  ],
+},
+
+  /* ──────────────────────────────────
+     CATÉGORIE : Infractions financières
+  ────────────────────────────────── */
+
+   
+{
+  num: '800-1',
+  cat: 'Infractions financières',
+  titre: 'Blanchiment d’argent',
+  desc: 'Dissimulation de l’origine illégale de fonds.',
+  sanctions: [
+    { type: 'prison', valeur: '30', unite: 'minutes' },
+    { type: 'amende', valeur: '5000', unite: '€' },
+    { type: 'b3', valeur: 'Inscription', unite: 'casier' },
+  ],
+},
+{
+  num: '800-2',
+  cat: 'Infractions financières',
+  titre: 'Escroquerie',
+  desc: 'Obtention frauduleuse d’argent ou de biens.',
+  sanctions: [
+    { type: 'prison', valeur: '15', unite: 'minutes' },
+    { type: 'amende', valeur: '2000', unite: '€' },
+  ],
+},
   /* ──────────────────────────────────
      EXEMPLE : ajoutez vos propres articles ici
      en copiant le bloc ci-dessous et en le modifiant :
