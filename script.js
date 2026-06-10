@@ -49,6 +49,7 @@ const ARTICLES = [
     desc: 'Toute personne surprise au volant sous influence avérée de produits stupéfiants.',
     sanctions: [
       { type: 'points', valeur: '3',  unite: 'points'  },
+      { type: 'amende', valeur: '300', unite: '€'     },
       { type: 'garde',  valeur: '5',  unite: 'minutes' },
       { type: 'b2',     valeur: 'Inscription', unite: 'casier' },
     ],
@@ -78,7 +79,7 @@ const ARTICLES = [
     titre: 'Grand excès de vitesse (+50 km/h)',
     desc: 'Dépassement de la vitesse maximale autorisée de plus de 50 km/h constaté par un agent ou radar.',
     sanctions: [
-      { type: 'amende', valeur: '750', unite: '€'     },
+      { type: 'amende', valeur: '1000', unite: '€'     },
       { type: 'points', valeur: '4',   unite: 'points'},
     ],
   },
@@ -91,6 +92,7 @@ const ARTICLES = [
       { type: 'points',     valeur: '4',  unite: 'points'  },
       { type: 'suspension', valeur: '15', unite: 'minutes' },
       { type: 'prison',     valeur: '10', unite: 'minutes' },
+      { type: 'amende', valeur: '1500', unite: '€'     },
     ],
   },
   {
@@ -101,7 +103,7 @@ const ARTICLES = [
     sanctions: [
       { type: 'points',     valeur: '2',   unite: 'points'  },
       { type: 'garde',      valeur: '5',   unite: 'minutes' },
-      { type: 'amende',     valeur: '500', unite: '€'       },
+      { type: 'amende',     valeur: '250', unite: '€'       },
       { type: 'suspension', valeur: '8',   unite: 'minutes' },
     ],
   },
